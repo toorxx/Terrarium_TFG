@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MLAgents;
-using MLAgents.Sensors;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
+
 
 public enum CreatureType
 {
@@ -22,6 +23,7 @@ public class CreatureAgent : Agent
     public float AttackDamage;
     public float DefendDamage;
     //public float Eyesight;
+    public Area area;
 
     [Header("Monitoring")]
     public float Energy;
@@ -56,7 +58,7 @@ public class CreatureAgent : Agent
         Size = 1;
         Energy = 1;
         Age = 0;
-        bounds = GetEnvironmentBounds();
+        bounds = Area.InstanceArea.GetBounds();
         var x = Random.Range(-bounds.x, bounds.x);
         var z = Random.Range(-bounds.y, bounds.y);
         transform.position = new Vector3(x, 1, z);
@@ -77,6 +79,8 @@ public class CreatureAgent : Agent
         //rayPer = GetComponent<RayPerception>();
         agentRB = GetComponent<Rigidbody>();
         currentAction = "Idle";
+        // add to the area
+        //area.AddObjectToList(gameObject);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -205,11 +209,12 @@ public class CreatureAgent : Agent
         }
         if (Buried)
         {
+            AddReward(-.5f);
             EndEpisode();
         }
         if (Dead) return;
         if (CanGrow) Grow();        
-        if (CanReproduce) Reproduce();        
+        //if (CanReproduce) Reproduce();        
         Age += AgeRate; 
         MonitorLog();
     }
@@ -227,26 +232,26 @@ public class CreatureAgent : Agent
 
     public void MonitorLog()
     {
-        Monitor.Log("Action", currentAction, transform);
-        Monitor.Log("Size", Size / MatureSize, transform);
-        Monitor.Log("Energy", Energy / MaxEnergy, transform);
-        Monitor.Log("Age", Age / MatureSize, transform);
+        MLAgents.Monitor.Log("Action", currentAction, transform);
+        MLAgents.Monitor.Log("Size", Size / MatureSize, transform);
+        MLAgents.Monitor.Log("Energy", Energy / MaxEnergy, transform);
+        MLAgents.Monitor.Log("Age", Age / MatureSize, transform);
     }
 
     public bool OutOfBounds
     {
         get
         {
-            if (transform.position.y < 0) return true;
-            if (transform.position.x > bounds.x ||
-                transform.position.x < -bounds.x ||
-                transform.position.z > bounds.y ||
-                transform.position.z < -bounds.y)
-                {Debug.Log("Out");
-                //Debug.Log("X: " + transform.position.x + "; Z: " + transform.position.z);
-                return true;}
-            
-            return false;
+            // if (transform.position.y < 0) return true;
+            // if (transform.position.x > bounds.x ||
+            //     transform.position.x < -bounds.x ||
+            //     transform.position.z > bounds.y ||
+            //     transform.position.z < -bounds.y)
+            //     {Debug.Log("Out");
+            //     //Debug.Log("X: " + transform.position.x + "; Z: " + transform.position.z);
+            //     return true;}
+            //return false;
+            return !(Area.InstanceArea.InBounds(transform.position.x, transform.position.z));
         }
     }
     
@@ -281,7 +286,7 @@ public class CreatureAgent : Agent
 
     private GameObject FirstAdjacent(string tag)
     {
-        var colliders = Physics.OverlapSphere(transform.position, 1.2f/* * Size*/);
+        var colliders = Physics.OverlapSphere(transform.position, 1.2f);
         foreach (var collider in colliders)
         {
             if (collider.gameObject.tag == tag && collider.transform != transform)
@@ -295,7 +300,7 @@ public class CreatureAgent : Agent
 
     private GameObject FirstAdjacentDead(string tag)
     {
-        var colliders = Physics.OverlapSphere(transform.position, 1.2f/* * Size*/);
+        var colliders = Physics.OverlapSphere(transform.position, 1.2f);
         foreach (var collider in colliders)
         {
             var obj = collider.gameObject.GetComponent<CreatureAgent>();
@@ -362,6 +367,7 @@ public class CreatureAgent : Agent
             var go = Instantiate(ChildSpawn, new Vector3(vec.x, 0, vec.y), Quaternion.identity, Environment.transform);
             go.name = go.name + (count++).ToString();
             var ca = go.GetComponent<CreatureAgent>();
+            Debug.Log(Time.captureDeltaTime + " game object instantiated");
             ca.OnEpisodeBegin();
             Energy = Energy / 2;
             AddReward(.2f);            
@@ -384,7 +390,10 @@ public class CreatureAgent : Agent
                     var creature = adj.GetComponent<Plant>();
                     var consume = Mathf.Min(creature.Energy, 5);
                     creature.Energy -= consume;
-                    if (creature.Energy < .1) Destroy(adj);
+                    if (creature.Energy < .1)
+                    {
+                        creature.Die();
+                    }
                     Energy += consume;
                     AddReward(.1f);
                     nextAction = Time.timeSinceLevelLoad + (25 / EatingSpeed);
@@ -406,10 +415,10 @@ public class CreatureAgent : Agent
         }
         Energy -= .01f;
         //Energy += .1f;
-        transform.Rotate(rotateDir, Time.fixedDeltaTime * MaxSpeed);
-        //transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
+        //transform.Rotate(rotateDir, Time.fixedDeltaTime * MaxSpeed);
+        transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
         currentAction = "Moving";
-        nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
+        //nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
     }
 
     private Vector2 GetEnvironmentBounds()
@@ -420,11 +429,10 @@ public class CreatureAgent : Agent
         return new Vector2(xs, zs) * 5;
     }
 
-    public override float[] Heuristic()
+    public override void Heuristic(float[] heuristicRes)
     {
         // Put the actions into an array and return
-        float[] heuristicRes = new float[7];
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < heuristicRes.Length; i++)
         {
             heuristicRes[i] = 0f;
         }
@@ -454,7 +462,6 @@ public class CreatureAgent : Agent
         {
             heuristicRes[2] = 1f;
         }
-        return heuristicRes;
     }
 
     

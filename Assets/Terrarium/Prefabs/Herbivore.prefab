@@ -107,11 +107,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 7
-    numStackedVectorObservations: 5
-    vectorActionSize: 07000000
-    vectorActionDescriptions: []
-    vectorActionSpaceType: 1
+    VectorObservationSize: 7
+    NumStackedVectorObservations: 5
+    VectorActionSize: 07000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
   m_Model: {fileID: 5022602860645237092, guid: ebca112cf690b0a4fbc2a450b9d0c6fe, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  maxStep: 0
+  MaxStep: 0
   CreatureType: 0
   MaxEnergy: 5
   MatureSize: 15
@@ -142,6 +142,7 @@ MonoBehaviour:
   MaxSpeed: 10
   AttackDamage: 0
   DefendDamage: 10
+  area: {fileID: 0}
   Energy: 0
   Size: 0
   Age: 0

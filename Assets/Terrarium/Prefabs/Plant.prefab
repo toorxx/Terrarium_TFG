@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4002437340671942467
+--- !u!1 &6482601656184880404
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4002437340671942466}
-  - component: {fileID: 4002437340671942471}
-  - component: {fileID: 4002437340671942468}
-  - component: {fileID: 4002437340671942469}
+  - component: {fileID: 6482601656184880405}
+  - component: {fileID: 6482601656184880400}
+  - component: {fileID: 6482601656184880403}
+  - component: {fileID: 6482601656184880402}
   m_Layer: 0
   m_Name: Plant
   m_TagString: plant
@@ -19,28 +19,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4002437340671942466
+--- !u!4 &6482601656184880405
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4002437340671942467}
+  m_GameObject: {fileID: 6482601656184880404}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.01, y: 0, z: -4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4002437340092215724}
+  - {fileID: 6482601655697413115}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4002437340671942471
+--- !u!114 &6482601656184880400
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4002437340671942467}
+  m_GameObject: {fileID: 6482601656184880404}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 707622fab537d2740b3e2a3f9b869d1e, type: 3}
@@ -50,19 +50,20 @@ MonoBehaviour:
   MatureSize: 5
   GrowthRate: 1
   SeedSpreadRadius: 10
+  area: {fileID: 0}
   Energy: 0
   Size: 0
   Age: 0
-  SeedlingSpawn: {fileID: 4002437340671942467}
+  SeedlingSpawn: {fileID: 6482601656184880404}
   EnergyGrowthRate: 0.01
   AgeRate: 0.001
---- !u!54 &4002437340671942468
+--- !u!54 &6482601656184880403
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4002437340671942467}
+  m_GameObject: {fileID: 6482601656184880404}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -72,13 +73,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &4002437340671942469
+--- !u!136 &6482601656184880402
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4002437340671942467}
+  m_GameObject: {fileID: 6482601656184880404}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -86,12 +87,12 @@ CapsuleCollider:
   m_Height: 1.25
   m_Direction: 1
   m_Center: {x: 0.3, y: 0.75, z: 0.1}
---- !u!1001 &4002437340092112952
+--- !u!1001 &6482601655697375855
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 4002437340671942466}
+    m_TransformParent: {fileID: 6482601656184880405}
     m_Modifications:
     - target: {fileID: 187178, guid: abf1b07b6a282e94c8633f31f02a021b, type: 3}
       propertyPath: m_Name
@@ -151,9 +152,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abf1b07b6a282e94c8633f31f02a021b, type: 3}
---- !u!4 &4002437340092215724 stripped
+--- !u!4 &6482601655697413115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 496020, guid: abf1b07b6a282e94c8633f31f02a021b,
     type: 3}
-  m_PrefabInstance: {fileID: 4002437340092112952}
+  m_PrefabInstance: {fileID: 6482601655697375855}
   m_PrefabAsset: {fileID: 0}

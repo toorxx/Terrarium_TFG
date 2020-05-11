@@ -9,6 +9,7 @@ public class Plant : MonoBehaviour {
     public float MatureSize;
     public float GrowthRate;
     public float SeedSpreadRadius;
+    public Area area;
     
     [Header("Monitoring")]
     public float Energy;
@@ -31,19 +32,17 @@ public class Plant : MonoBehaviour {
         Age = 0;
         Environment = transform.parent;
         TransformSize();
+        Area.InstanceArea.Plants.Add(gameObject);
     }
     
-
     void Update ()
     {        
         if (CanGrow) Grow();
-        if (CanReproduce) Reproduce();
         //if (Dead) Destroy(this);
+        if (CanReproduce) Reproduce();
         if(Dead) {
             Debug.Log("Plant Destroyed" + gameObject);
-            //Destroy(this);
-            Destroy(gameObject);
-            //Die();
+            Die();
         }
         Age += AgeRate;
         Energy += EnergyGrowthRate;               
@@ -91,11 +90,15 @@ public class Plant : MonoBehaviour {
     {
         var vec = Random.insideUnitCircle * SeedSpreadRadius 
             + new Vector2(transform.position.x, transform.position.z);
-        Instantiate(SeedlingSpawn, new Vector3(vec.x,0,vec.y), Quaternion.identity, Environment);
-        Energy = Energy / 2;
+        if(Area.InstanceArea.InBounds(vec.x, vec.y)){
+            Instantiate(SeedlingSpawn, new Vector3(vec.x,0,vec.y), Quaternion.identity, Environment);
+            Energy = Energy / 2;
+        }
     }
 
-    public void Die(){
+    public void Die()
+    {
+        Area.InstanceArea.Plants.Remove(gameObject);
         Destroy(gameObject);
     }
 

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6784988903221665729
+--- !u!1 &9123858990058674292
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6784988903221665730}
-  - component: {fileID: 6784988903221665742}
-  - component: {fileID: 6784988903221665741}
-  - component: {fileID: 6784988903221665740}
-  - component: {fileID: 6784988903221665731}
-  - component: {fileID: 6784988903221665743}
+  - component: {fileID: 9123858990058674295}
+  - component: {fileID: 9123858990058674299}
+  - component: {fileID: 9123858990058674296}
+  - component: {fileID: 9123858990058674297}
+  - component: {fileID: 9123858990058674294}
+  - component: {fileID: 9123858990058674298}
   m_Layer: 0
   m_Name: Herbivore
   m_TagString: herbivore
@@ -21,41 +21,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6784988903221665730
+--- !u!4 &9123858990058674295
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6784988903221665729}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 9123858990058674292}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6789706284713124852}
+  - {fileID: 9119380195891815489}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6784988903221665742
+--- !u!65 &9123858990058674299
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6784988903221665729}
+  m_GameObject: {fileID: 9123858990058674292}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0.73}
---- !u!54 &6784988903221665741
+--- !u!54 &9123858990058674296
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6784988903221665729}
+  m_GameObject: {fileID: 9123858990058674292}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -65,13 +65,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6784988903221665740
+--- !u!114 &9123858990058674297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6784988903221665729}
+  m_GameObject: {fileID: 9123858990058674292}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
@@ -94,13 +94,13 @@ MonoBehaviour:
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0
   m_EndVerticalOffset: 0
---- !u!114 &6784988903221665731
+--- !u!114 &9123858990058674294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6784988903221665729}
+  m_GameObject: {fileID: 9123858990058674292}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
@@ -112,22 +112,22 @@ MonoBehaviour:
     VectorActionSize: 07000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
-  m_Model: {fileID: 5022602860645237092, guid: ebca112cf690b0a4fbc2a450b9d0c6fe, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: HerbivoreBrain
   TeamId: 0
   m_UseChildSensors: 1
---- !u!114 &6784988903221665743
+--- !u!114 &9123858990058674298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6784988903221665729}
+  m_GameObject: {fileID: 9123858990058674292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a01c0fa55690a5343a0f763034dacc55, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a883f0f53f894262b881263212eed05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
@@ -142,19 +142,18 @@ MonoBehaviour:
   MaxSpeed: 10
   AttackDamage: 0
   DefendDamage: 10
-  area: {fileID: 0}
   Energy: 0
   Size: 0
   Age: 0
   currentAction: 
-  ChildSpawn: {fileID: 6784988903221665729}
+  ChildSpawn: {fileID: 9123858990058674292}
   AgeRate: 0.001
---- !u!1001 &6784988904964795316
+--- !u!1001 &9123858989655370753
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6784988903221665730}
+    m_TransformParent: {fileID: 9123858990058674295}
     m_Modifications:
     - target: {fileID: 1993070692023474, guid: af68f6ffff31ff64c93521a587d234b1, type: 3}
       propertyPath: m_Name
@@ -204,11 +203,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4783500783028288, guid: af68f6ffff31ff64c93521a587d234b1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4783500783028288, guid: af68f6ffff31ff64c93521a587d234b1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af68f6ffff31ff64c93521a587d234b1, type: 3}
---- !u!4 &6789706284713124852 stripped
+--- !u!4 &9119380195891815489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4783500783028288, guid: af68f6ffff31ff64c93521a587d234b1,
     type: 3}
-  m_PrefabInstance: {fileID: 6784988904964795316}
+  m_PrefabInstance: {fileID: 9123858989655370753}
   m_PrefabAsset: {fileID: 0}

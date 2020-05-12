@@ -9,7 +9,8 @@ public class Area : MonoBehaviour
     public List<GameObject> Carnivores;
     public Plant plantPrefab;
 
-    public static Area InstanceArea;
+    private static Area InstanceArea;
+    public GameObject controlledGO;
 
     private void Awake() 
     {
@@ -17,6 +18,7 @@ public class Area : MonoBehaviour
         Plants = new List<GameObject>();
         Herbivores = new List<GameObject>();
         Carnivores = new List<GameObject>();
+        controlledGO = new GameObject();
     }
 
     // Update is called once per frame
@@ -27,8 +29,18 @@ public class Area : MonoBehaviour
             var pos = Random.insideUnitCircle * 3 + new Vector2(transform.position.x, transform.position.z);
             Instantiate(plantPrefab, pos, Quaternion.identity, transform);
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            int randomHerbIndex = Random.Range(0, Herbivores.Count);
+            int randomCarnIndex = Random.Range(0, Carnivores.Count);
+            if (controlledGO.tag == "herbivore")
+                controlledGO = Carnivores.Count > 0 ? Carnivores[randomCarnIndex] : Herbivores[randomHerbIndex];
+            else if (controlledGO.tag == "carnivore")
+                controlledGO = Herbivores.Count > 0 ? Herbivores[randomCarnIndex] : Carnivores[randomHerbIndex];
+        } 
     }
 
+    public static Area Instance { get { return InstanceArea; }}
     // bear in mind this is a workaround that works because its a rectangular plane
     public Vector2 GetBounds()
     {
@@ -42,6 +54,14 @@ public class Area : MonoBehaviour
         var localX = transform.localScale.x * GetComponent<MeshFilter>().mesh.bounds.extents.x;
         var localZ = transform.localScale.z * GetComponent<MeshFilter>().mesh.bounds.extents.x;
         return(x < localX && x > -localX && z < localZ && z > -localZ);
+    }
+
+    public void AddGameObject(GameObject go)
+    {
+        if (go.tag == "herbivore")
+            Herbivores.Add(go);
+        else if (go.tag == "carnivore")
+            Carnivores.Add(go);
     }
 
 

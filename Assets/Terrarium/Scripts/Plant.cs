@@ -32,7 +32,7 @@ public class Plant : MonoBehaviour {
         Age = 0;
         Environment = transform.parent;
         TransformSize();
-        Area.InstanceArea.Plants.Add(gameObject);
+        Area.Instance.Plants.Add(gameObject);
     }
     
     void Update ()
@@ -90,7 +90,7 @@ public class Plant : MonoBehaviour {
     {
         var vec = Random.insideUnitCircle * SeedSpreadRadius 
             + new Vector2(transform.position.x, transform.position.z);
-        if(Area.InstanceArea.InBounds(vec.x, vec.y)){
+        if(Area.Instance.InBounds(vec.x, vec.y)){
             Instantiate(SeedlingSpawn, new Vector3(vec.x,0,vec.y), Quaternion.identity, Environment);
             Energy = Energy / 2;
         }
@@ -98,7 +98,7 @@ public class Plant : MonoBehaviour {
 
     public void Die()
     {
-        Area.InstanceArea.Plants.Remove(gameObject);
+        Area.Instance.Plants.Remove(gameObject);
         Destroy(gameObject);
     }
 

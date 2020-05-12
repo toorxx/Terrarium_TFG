@@ -10,7 +10,7 @@ public enum CreatureType
     Herbivore,
     Carnivore
 }
-public class CreatureAgent : Agent
+public abstract class CreatureAgent : Agent
 {
     [Header("Creature Type")]
     public CreatureType CreatureType;
@@ -23,7 +23,7 @@ public class CreatureAgent : Agent
     public float AttackDamage;
     public float DefendDamage;
     //public float Eyesight;
-    public Area area;
+    //public Area area;
 
     [Header("Monitoring")]
     public float Energy;
@@ -40,7 +40,7 @@ public class CreatureAgent : Agent
     private Vector2 bounds;
     private GameObject Environment;
     private Rigidbody agentRB;
-    private float nextAction;
+    protected float nextAction;
     private bool died;
     //private RayPerception rayPer;    
     //private TerrariumAcademy academy;
@@ -58,10 +58,12 @@ public class CreatureAgent : Agent
         Size = 1;
         Energy = 1;
         Age = 0;
-        bounds = Area.InstanceArea.GetBounds();
+        //bounds = Area.InstanceArea.GetBounds();
+        bounds = GetEnvironmentBounds();
         var x = Random.Range(-bounds.x, bounds.x);
         var z = Random.Range(-bounds.y, bounds.y);
         transform.position = new Vector3(x, 1, z);
+        //Area.Instance.AddGameObject(gameObject);
         TransformSize();
         Initialize();
     }
@@ -80,7 +82,8 @@ public class CreatureAgent : Agent
         agentRB = GetComponent<Rigidbody>();
         currentAction = "Idle";
         // add to the area
-        //area.AddObjectToList(gameObject);
+        //Area.Instance.AddGameObject(gameObject);
+        //Debug.Log(Area.Instance.Herbivores.Count);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -143,61 +146,14 @@ public class CreatureAgent : Agent
         }
     }
 
-    void Defend()
+    protected virtual void Defend()
     {
         currentAction = "Defend";
+        Energy -= .01f;
         nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
     }
 
-    void Attack()
-    {
-        float damage = 0f;
-        currentAction = "Attack";
-        nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
-        var _vic = FirstAdjacent("herbivore");
-        CreatureAgent vic = null;
-        if (_vic != null)
-        {   
-            vic = _vic.GetComponent<CreatureAgent>();
-            if (vic.currentAction == "Defend")
-            {
-                damage = ((AttackDamage * Size) - (vic.DefendDamage * vic.Size)) / (Size * vic.Size);
-            }
-            else
-            {
-                damage = ((AttackDamage * Size) - (1 * vic.Size)) / (Size * vic.Size);
-            }
-        }
-        else
-        {
-            _vic = FirstAdjacent("carnivore");
-            if (_vic != null)
-            {
-                vic = _vic.GetComponent<CreatureAgent>();
-                if (vic.currentAction == "Attack")
-                {
-                    damage = ((AttackDamage * Size) - (vic.AttackDamage * vic.Size)) / (Size * vic.Size);
-                }
-                else
-                {
-                    damage = ((AttackDamage * Size) - (vic.DefendDamage * vic.Size)) / (Size * vic.Size);
-                }
-            }
-        }
-
-        if(damage > 0)
-        {
-            vic.Energy -= damage;
-            if (vic.Energy < 0)
-            {
-                AddReward(.25f);
-            }
-        }
-        else if(damage < 0){
-            Energy -= damage;
-        }
-        Energy -= .1f;
-    }
+    protected abstract void Attack();
         
     void Update()
     {
@@ -251,7 +207,7 @@ public class CreatureAgent : Agent
             //     //Debug.Log("X: " + transform.position.x + "; Z: " + transform.position.z);
             //     return true;}
             //return false;
-            return !(Area.InstanceArea.InBounds(transform.position.x, transform.position.z));
+            return !(Area.Instance.InBounds(transform.position.x, transform.position.z));
         }
     }
     
@@ -268,23 +224,9 @@ public class CreatureAgent : Agent
         }
     }
 
-    bool CanEat
-    {
-        get
-        {
-            if(CreatureType == CreatureType.Herbivore)
-            {
-                if (FirstAdjacent("plant") != null) return true;
-            }
-            if(CreatureType == CreatureType.Carnivore)
-            {
-                if (FirstAdjacentDead("herbivore") != null) return true;
-            }
-            return false;
-        }
-    }
+    protected abstract bool CanEat{ get; }
 
-    private GameObject FirstAdjacent(string tag)
+    protected GameObject FirstAdjacent(string tag)
     {
         var colliders = Physics.OverlapSphere(transform.position, 1.2f);
         foreach (var collider in colliders)
@@ -298,9 +240,9 @@ public class CreatureAgent : Agent
         return null;
     }
 
-    private GameObject FirstAdjacentDead(string tag)
+    protected GameObject FirstAdjacentDead(string tag)
     {
-        var colliders = Physics.OverlapSphere(transform.position, 1.2f);
+        var colliders = Physics.OverlapSphere(transform.position, 2f);
         foreach (var collider in colliders)
         {
             var obj = collider.gameObject.GetComponent<CreatureAgent>();
@@ -376,34 +318,7 @@ public class CreatureAgent : Agent
         }
     }
 
-    public void Eat()
-    {
-        
-        if (CanEat)
-        {
-            if (CreatureType == CreatureType.Herbivore)
-            {
-                var adj = FirstAdjacent("plant");
-                Debug.Log(adj);
-                if (adj != null)
-                {
-                    var creature = adj.GetComponent<Plant>();
-                    var consume = Mathf.Min(creature.Energy, 5);
-                    creature.Energy -= consume;
-                    if (creature.Energy < .1)
-                    {
-                        creature.Die();
-                    }
-                    Energy += consume;
-                    AddReward(.1f);
-                    nextAction = Time.timeSinceLevelLoad + (25 / EatingSpeed);
-                    currentAction = "Eating";
-                    Debug.Log(currentAction);
-
-                }
-            }
-        }
-    }
+    protected abstract void Eat();
 
     public void MoveAgent(float[] act)
     {
@@ -412,13 +327,18 @@ public class CreatureAgent : Agent
         if (act[5] > .5f)
         {
             transform.position = transform.position + transform.forward;
+            Energy -= .01f;
         }
-        Energy -= .01f;
+        // ROTATE less cost than moving forward
+        else{
+            Energy -= .005f;
+
+        }
         //Energy += .1f;
         //transform.Rotate(rotateDir, Time.fixedDeltaTime * MaxSpeed);
         transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
         currentAction = "Moving";
-        //nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
+        nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
     }
 
     private Vector2 GetEnvironmentBounds()

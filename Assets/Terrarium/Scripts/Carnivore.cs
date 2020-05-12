@@ -20,6 +20,7 @@ public class Carnivore : CreatureAgent
         nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
         var _vic = FirstAdjacent("herbivore");
         CreatureAgent vic = null;
+        Debug.Log(_vic);
         if (_vic != null)
         {   
             vic = _vic.GetComponent<CreatureAgent>();
@@ -98,9 +99,9 @@ public class Carnivore : CreatureAgent
         {
             heuristicRes[1] = 1f;
         }
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.O))
         {
-            heuristicRes[2] = 1f;
+            heuristicRes[3] = 1f;
         }
     }
 }

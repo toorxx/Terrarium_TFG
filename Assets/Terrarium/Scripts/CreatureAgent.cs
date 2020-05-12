@@ -149,6 +149,7 @@ public abstract class CreatureAgent : Agent
     protected virtual void Defend()
     {
         currentAction = "Defend";
+        Energy -= .01f;
         nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
     }
 
@@ -241,7 +242,7 @@ public abstract class CreatureAgent : Agent
 
     protected GameObject FirstAdjacentDead(string tag)
     {
-        var colliders = Physics.OverlapSphere(transform.position, 1.2f);
+        var colliders = Physics.OverlapSphere(transform.position, 2f);
         foreach (var collider in colliders)
         {
             var obj = collider.gameObject.GetComponent<CreatureAgent>();
@@ -326,13 +327,18 @@ public abstract class CreatureAgent : Agent
         if (act[5] > .5f)
         {
             transform.position = transform.position + transform.forward;
+            Energy -= .01f;
         }
-        Energy -= .01f;
+        // ROTATE less cost than moving forward
+        else{
+            Energy -= .005f;
+
+        }
         //Energy += .1f;
         //transform.Rotate(rotateDir, Time.fixedDeltaTime * MaxSpeed);
         transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
         currentAction = "Moving";
-        //nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
+        nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
     }
 
     private Vector2 GetEnvironmentBounds()

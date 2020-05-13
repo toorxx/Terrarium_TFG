@@ -9,7 +9,7 @@ public class Carnivore : CreatureAgent
     {
         get
         {
-            if (FirstAdjacentDead("herbivore") != null) return true;
+            if (FirstAdjacentDead("food") != null) return true;
             else return false;
         }
     }
@@ -52,13 +52,14 @@ public class Carnivore : CreatureAgent
 
         if(damage > 0)
         {
-            vic.Energy -= damage;
-            if (vic.Energy < 0)
+            vic.Life -= damage;
+            if (vic.Life < 0)
             {
                 AddReward(.25f);
             }
         }
         else if(damage < 0){
+            //TODO: Canviar aixo per life??
             Energy -= damage;
         }
         Energy -= .1f;
@@ -66,8 +67,27 @@ public class Carnivore : CreatureAgent
 
     override protected void Eat()
     {
-        // decide what to do here
+        if (CanEat)
+        {
+            var adj = FirstAdjacent("food");
+            Debug.Log(adj);
+            if (adj != null)
+            {
+                var creature = adj.GetComponent<Food>();
+                var consume = Mathf.Min(creature.Energy, 5);
+                creature.Energy -= consume;
+                if (creature.Energy < .1)
+                {
+                    creature.Die();
+                }
+                Energy += consume;
+                AddReward(.1f);
+                nextAction = Time.timeSinceLevelLoad + (25 / EatingSpeed);
+                currentAction = "Eating";
+                Debug.Log(currentAction);
 
+            }
+        }
     }
 
     public override void Heuristic(float[] heuristicRes)

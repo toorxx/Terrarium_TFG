@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9123858990058674292}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -112,9 +112,9 @@ MonoBehaviour:
     VectorActionSize: 07000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 262eac6e64bcc4abbba782bcdb30ebc3, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: HerbivoreBrain
   TeamId: 0
   m_UseChildSensors: 1
@@ -142,11 +142,15 @@ MonoBehaviour:
   MaxSpeed: 10
   AttackDamage: 0
   DefendDamage: 10
+  MaxLife: 0
   Energy: 0
   Size: 0
   Age: 0
   currentAction: 
+  Life: 0
   ChildSpawn: {fileID: 9123858990058674292}
+  FoodPrefab: {fileID: 3544789024116071987, guid: 573f5a4ad120841408abb60377d311b3,
+    type: 3}
   AgeRate: 0.001
 --- !u!1001 &9123858989655370753
 PrefabInstance:
@@ -158,6 +162,14 @@ PrefabInstance:
     - target: {fileID: 1993070692023474, guid: af68f6ffff31ff64c93521a587d234b1, type: 3}
       propertyPath: m_Name
       value: Chicken
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142581058671862, guid: af68f6ffff31ff64c93521a587d234b1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142581058671862, guid: af68f6ffff31ff64c93521a587d234b1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4783500783028288, guid: af68f6ffff31ff64c93521a587d234b1, type: 3}
       propertyPath: m_LocalPosition.x

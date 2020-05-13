@@ -24,15 +24,19 @@ public abstract class CreatureAgent : Agent
     public float DefendDamage;
     //public float Eyesight;
     //public Area area;
+    public float MaxLife;
 
     [Header("Monitoring")]
     public float Energy;
     public float Size;
     public float Age;
     public string currentAction;
+    public float Life;
+
     
     [Header("Child")]
     public GameObject ChildSpawn;
+    public GameObject FoodPrefab;
 
     [Header("Species Parameters")]    
     public float AgeRate = .001f;
@@ -58,6 +62,7 @@ public abstract class CreatureAgent : Agent
         Size = 1;
         Energy = 1;
         Age = 0;
+        Life = MaxLife;
         //bounds = Area.InstanceArea.GetBounds();
         bounds = GetEnvironmentBounds();
         var x = Random.Range(-bounds.x, bounds.x);
@@ -169,6 +174,13 @@ public abstract class CreatureAgent : Agent
             EndEpisode();
         }
         if (Dead) return;
+
+        if (Life <= 0)
+        {
+            AddReward(-.5f);
+            TransformToFood();
+            EndEpisode();
+        }
         if (CanGrow) Grow();        
         //if (CanReproduce) Reproduce();        
         Age += AgeRate; 
@@ -274,6 +286,7 @@ public abstract class CreatureAgent : Agent
                 currentAction = "Dead";            
                 died = true;
                 Energy = Size;  //creature size is converted to energy
+                TransformToFood();
                 AddReward(.2f);
                 EndEpisode();
                 return true;
@@ -384,5 +397,12 @@ public abstract class CreatureAgent : Agent
         }
     }
 
-    
+    public void TransformToFood()
+    {
+        var Food = Instantiate(FoodPrefab, transform.position, Quaternion.identity, transform.parent);
+        //var ff= Food.GetComponent<Food>();
+        //ff.Energy = Energy;
+    }
 }
+
+

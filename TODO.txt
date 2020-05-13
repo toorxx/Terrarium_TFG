@@ -1,0 +1,11 @@
+## Dudas
+Porque la energia del agente solo baja en el bool buried?
+
+## Apuntes
+Buried: Morirse pq es queda sense energia
+Dead: Morirse pq Age < MatureAge
+
+## Ideas
+Podem fer un atribut life que sigui el q disminueix quan el agent es atacat
+Llavors, quan un agent mata un altre, el primer pot menjarse al segon i obtenir la energia de aquest. 
+Quan un agent mor la 'life' es 0 pero la energia no. Aquesta energia passa a ser menjar que poden consumir els altres agents.

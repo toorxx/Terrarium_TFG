@@ -657,7 +657,7 @@ PrefabInstance:
     - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
       propertyPath: m_BehaviorType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674295, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
@@ -713,6 +713,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674298, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: MaxLife
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f805a9c045cb4d7182e4ded9fea3614, type: 3}

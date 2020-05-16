@@ -32,6 +32,7 @@ public abstract class CreatureAgent : Agent
     public float Age;
     public string currentAction;
     public float Life;
+    public bool HeuristicActions;
 
     
     [Header("Child")]
@@ -41,7 +42,7 @@ public abstract class CreatureAgent : Agent
     [Header("Species Parameters")]    
     public float AgeRate = .001f;
 
-    private Vector2 bounds;
+    protected Vector2 bounds;
     private GameObject Environment;
     private Rigidbody agentRB;
     protected float nextAction;
@@ -180,6 +181,7 @@ public abstract class CreatureAgent : Agent
             AddReward(-.5f);
             TransformToFood();
             EndEpisode();
+            Debug.Log(Life);
         }
         if (CanGrow) Grow();        
         //if (CanReproduce) Reproduce();        
@@ -223,7 +225,7 @@ public abstract class CreatureAgent : Agent
         }
     }
     
-    void TransformSize()
+    protected void TransformSize()
     {
         transform.localScale = Vector3.one * Mathf.Pow(Size,1/3);
     }
@@ -243,9 +245,10 @@ public abstract class CreatureAgent : Agent
         var colliders = Physics.OverlapSphere(transform.position, 1.2f);
         foreach (var collider in colliders)
         {
+            Debug.Log(collider.gameObject.tag);
             if (collider.gameObject.tag == tag && collider.transform != transform)
             {
-                //Debug.Log(collider.gameObject.tag);
+                Debug.Log(collider.gameObject.tag);
                 return collider.gameObject;
             }
         }
@@ -351,10 +354,12 @@ public abstract class CreatureAgent : Agent
         //transform.Rotate(rotateDir, Time.fixedDeltaTime * MaxSpeed);
         transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
         currentAction = "Moving";
-        nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
+        // put this here because when testing manually this is annoying
+        if(!HeuristicActions)
+            nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
     }
 
-    private Vector2 GetEnvironmentBounds()
+    protected Vector2 GetEnvironmentBounds()
     {
         Environment = transform.parent.gameObject;
         var xs = Environment.transform.localScale.x;
@@ -387,10 +392,10 @@ public abstract class CreatureAgent : Agent
             heuristicRes[0] = 1f;
             heuristicRes[6] = 1f;
         }
-        if (Input.GetKey(KeyCode.E))
-        {
-            heuristicRes[1] = 1f;
-        }
+        // if (Input.GetKey(KeyCode.E))
+        // {
+        //     heuristicRes[1] = 1f;
+        // }
         if (Input.GetKey(KeyCode.R))
         {
             heuristicRes[2] = 1f;

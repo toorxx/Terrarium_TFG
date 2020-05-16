@@ -24,7 +24,6 @@ public class Herbivore : CreatureAgent
         if (CanEat)
         {
             var adj = FirstAdjacent("plant");
-            Debug.Log(adj);
             if (adj != null)
             {
                 var creature = adj.GetComponent<Plant>();

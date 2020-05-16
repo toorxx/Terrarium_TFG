@@ -5,11 +5,27 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 public class Carnivore : CreatureAgent
 {
+    public override void OnEpisodeBegin()
+    {
+        //Called on every reset
+        Size = 1;
+        Energy = 1000;
+        Age = 0;
+        Life = MaxLife;
+        //bounds = Area.InstanceArea.GetBounds();
+        bounds = GetEnvironmentBounds();
+        var x = Random.Range(-bounds.x, bounds.x);
+        var z = Random.Range(-bounds.y, bounds.y);
+        transform.position = new Vector3(x, 1, z);
+        //Area.Instance.AddGameObject(gameObject);
+        TransformSize();
+        Initialize();
+    }
     protected override bool CanEat
     {
         get
         {
-            if (FirstAdjacentDead("food") != null) return true;
+            if (FirstAdjacent("food") != null) return true;
             else return false;
         }
     }
@@ -17,10 +33,12 @@ public class Carnivore : CreatureAgent
     {
         float damage = 0f;
         currentAction = "Attack";
-        nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
+        // put this here because when testing manually this is annoying
+        if(!HeuristicActions)
+            nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
         var _vic = FirstAdjacent("herbivore");
         CreatureAgent vic = null;
-        Debug.Log(_vic);
+        //Debug.Log(_vic);
         if (_vic != null)
         {   
             vic = _vic.GetComponent<CreatureAgent>();
@@ -67,6 +85,8 @@ public class Carnivore : CreatureAgent
 
     override protected void Eat()
     {
+        Debug.Log(CanEat);
+        Debug.Log(FirstAdjacent("food"));
         if (CanEat)
         {
             var adj = FirstAdjacent("food");

@@ -142,11 +142,14 @@ MonoBehaviour:
   MaxSpeed: 10
   AttackDamage: 25
   DefendDamage: 5
+  MaxLife: 0
   Energy: 0
   Size: 0
   Age: 0
   currentAction: 
+  Life: 0
   ChildSpawn: {fileID: 9118978183945440656}
+  FoodPrefab: {fileID: 0}
   AgeRate: 0.001
 --- !u!1001 &202134552211540478
 PrefabInstance:

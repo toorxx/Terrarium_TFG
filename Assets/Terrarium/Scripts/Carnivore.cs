@@ -9,7 +9,7 @@ public class Carnivore : CreatureAgent
     {
         //Called on every reset
         Size = 1;
-        Energy = 1000;
+        Energy = 1;
         Age = 0;
         Life = MaxLife;
         //bounds = Area.InstanceArea.GetBounds();

@@ -339,6 +339,7 @@ public abstract class CreatureAgent : Agent
     public void MoveAgent(float[] act)
     {
         Vector3 rotateDir = Vector3.zero;
+        double rotationDir = Mathf.Clamp(Mathf.Round(act[6]), -1, 1);
         rotateDir = transform.up * Mathf.Clamp(act[6], -1f, 1f);
         if (act[5] > .5f)
         {
@@ -352,7 +353,8 @@ public abstract class CreatureAgent : Agent
         }
         //Energy += .1f;
         //transform.Rotate(rotateDir, Time.fixedDeltaTime * MaxSpeed);
-        transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
+        //transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
+        transform.Rotate(0, (float)rotationDir*90f, 0);
         currentAction = "Moving";
         // put this here because when testing manually this is annoying
         if(!HeuristicActions)

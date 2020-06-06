@@ -35,10 +35,7 @@ public class Herbivore : CreatureAgent
                 }
                 Energy += consume;
                 AddReward(.1f);
-                nextAction = Time.timeSinceLevelLoad + (25 / EatingSpeed);
                 currentAction = "Eating";
-                Debug.Log(currentAction);
-
             }
         }
     }

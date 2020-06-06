@@ -9,7 +9,7 @@ public class Carnivore : CreatureAgent
     {
         //Called on every reset
         Size = 1;
-        Energy = 1;
+        Energy = MaxEnergy;
         Age = 0;
         Life = MaxLife;
         //bounds = Area.InstanceArea.GetBounds();
@@ -33,115 +33,67 @@ public class Carnivore : CreatureAgent
     {
         float damage = 0f;
         currentAction = "Attack";
-        // put this here because when testing manually this is annoying
-        if(!HeuristicActions)
-            nextAction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
         var _vic = FirstAdjacent("herbivore");
         CreatureAgent vic = null;
-        //Debug.Log(_vic);
+        //only attack to hervibores
         if (_vic != null)
         {   
             vic = _vic.GetComponent<CreatureAgent>();
             if (vic.currentAction == "Defend")
             {
-                damage = ((AttackDamage * Size) - (vic.DefendDamage * vic.Size)) / (Size * vic.Size);
+                //damage = ((AttackDamage * Size) - (vic.DefendDamage * vic.Size)) / (Size * vic.Size);
+                //damage = vic.Life / 2;
+                damage = AttackDamage - vic.DefendDamage;
             }
             else
             {
-                damage = ((AttackDamage * Size) - (1 * vic.Size)) / (Size * vic.Size);
+                //damage = ((AttackDamage * Size) - (1 * vic.Size)) / (Size * vic.Size);
+                //damage = vic.Life;
+                damage = AttackDamage;
             }
+            Debug.Log(damage);
+            Debug.Log(_vic);
         }
-        else
-        {
-            _vic = FirstAdjacent("carnivore");
-            if (_vic != null)
-            {
-                vic = _vic.GetComponent<CreatureAgent>();
-                if (vic.currentAction == "Attack")
-                {
-                    damage = ((AttackDamage * Size) - (vic.AttackDamage * vic.Size)) / (Size * vic.Size);
-                }
-                else
-                {
-                    damage = ((AttackDamage * Size) - (vic.DefendDamage * vic.Size)) / (Size * vic.Size);
-                }
-            }
-        }
-
         if(damage > 0)
         {
-            vic.Life -= damage;
-            if (vic.Life < 0)
+            vic.Energy -= damage;
+            if (vic.Energy <= 0)
             {
                 AddReward(.25f);
+                vic.killed = true;
             }
         }
-        else if(damage < 0){
-            //TODO: Canviar aixo per life??
-            Energy -= damage;
-        }
+        // else if(damage < 0){
+        //     //TODO: Canviar aixo per life??
+        //     Energy -= damage;
+        // }
         Energy -= .1f;
     }
 
     override protected void Eat()
     {
-        Debug.Log(CanEat);
-        Debug.Log(FirstAdjacent("food"));
         if (CanEat)
         {
             var adj = FirstAdjacent("food");
-            Debug.Log(adj);
             if (adj != null)
             {
                 var creature = adj.GetComponent<Food>();
-                var consume = Mathf.Min(creature.Energy, 5);
-                creature.Energy -= consume;
-                if (creature.Energy < .1)
-                {
-                    creature.Die();
-                }
-                Energy += consume;
-                AddReward(.1f);
-                nextAction = Time.timeSinceLevelLoad + (25 / EatingSpeed);
+                //var consume = Mathf.Min(creature.Energy, 5);
+                // creature.Energy -= consume;
+                // if (creature.Energy < .1)
+                // {
+                //     creature.Die();
+                // }
                 currentAction = "Eating";
-                Debug.Log(currentAction);
-
+                creature.Die();
+                Energy += 5;
+                AddReward(.25f);
             }
         }
     }
 
-    public override void Heuristic(float[] heuristicRes)
+    protected override void Defend()
     {
-        // Put the actions into an array and return
-        for (int i = 0; i < heuristicRes.Length; i++)
-        {
-            heuristicRes[i] = 0f;
-        }
-        if (Input.GetKey(KeyCode.I))
-        {
-            // turn left
-            heuristicRes[0] = 1f;
-            heuristicRes[5] = 1f;
-        }
-        if (Input.GetKey(KeyCode.J))
-        {
-            // turn left
-            heuristicRes[0] = 1f;
-            heuristicRes[6] = -1f;
-        }
-        else if (Input.GetKey(KeyCode.L))
-        {
-            // turn right
-            heuristicRes[0] = 1f;
-            heuristicRes[6] = 1f;
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            heuristicRes[1] = 1f;
-        }
-        if (Input.GetKey(KeyCode.O))
-        {
-            heuristicRes[3] = 1f;
-        }
+        Attack();
     }
 }

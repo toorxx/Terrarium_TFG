@@ -194,7 +194,7 @@ PrefabInstance:
     - target: {fileID: 6482601656184880405, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.11
+      value: -4.11
       objectReference: {fileID: 0}
     - target: {fileID: 6482601656184880405, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
         type: 3}
@@ -416,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 9118978183945440656, guid: 173c9b466614940398cb81377f6d8fb9,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9118978183945440658, guid: 173c9b466614940398cb81377f6d8fb9,
         type: 3}
@@ -518,6 +518,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Herbivore (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674292, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
@@ -628,7 +633,7 @@ PrefabInstance:
     - target: {fileID: 9118978183945440656, guid: 173c9b466614940398cb81377f6d8fb9,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9118978183945440658, guid: 173c9b466614940398cb81377f6d8fb9,
         type: 3}
@@ -817,6 +822,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Herbivore (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674292, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
       propertyPath: m_Model
@@ -912,6 +922,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6482601656184880404, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6482601656184880405, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -980,6 +995,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Herbivore (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674292, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
@@ -1076,10 +1096,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6482601656184880404, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6482601656184880405, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 4.3
       objectReference: {fileID: 0}
     - target: {fileID: 6482601656184880405, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
         type: 3}
@@ -1150,6 +1175,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6482601656184880404, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6482601656184880405, guid: 8cf0e2d94bcdc4ef79d985ff77234a54,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1218,6 +1248,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Herbivore (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674292, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
@@ -1309,6 +1344,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5168178220650919580}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1372278893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9123858990058674292, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+    type: 3}
+  m_PrefabInstance: {fileID: 9123858989386734593}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1372278899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372278893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 1
 --- !u!1001 &1447763021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1320,6 +1375,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Herbivore (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674292, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
@@ -1416,6 +1476,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Herbivore (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674292, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
@@ -1640,7 +1705,7 @@ PrefabInstance:
     - target: {fileID: 9118978183945440656, guid: 173c9b466614940398cb81377f6d8fb9,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9118978183945440658, guid: 173c9b466614940398cb81377f6d8fb9,
         type: 3}
@@ -1792,6 +1857,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food
       objectReference: {fileID: 0}
+    - target: {fileID: 5168178221989649339, guid: 573f5a4ad120841408abb60377d311b3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 573f5a4ad120841408abb60377d311b3, type: 3}
 --- !u!4 &5498889766533401212 stripped
@@ -1888,6 +1958,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
       propertyPath: m_Model
       value: 
       objectReference: {fileID: 0}
@@ -1895,6 +1970,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BehaviorType
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorActionSpaceType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123858990058674294, guid: 8f805a9c045cb4d7182e4ded9fea3614,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9123858990058674295, guid: 8f805a9c045cb4d7182e4ded9fea3614,
         type: 3}

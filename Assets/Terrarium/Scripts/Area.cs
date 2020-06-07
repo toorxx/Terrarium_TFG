@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Area : MonoBehaviour
 {
+    public int _initial_plants;
+    public int _initial_herbivores;
+    public int _initial_carnivores;
+    public int _min_plants;
     public List<GameObject> Plants;
     public List<GameObject> Herbivores;
     public List<GameObject> Carnivores;
     public Plant plantPrefab;
+    public Herbivore herbivorePrefab;
+    public Carnivore carnivorePrefab;
+    public Food FoodPrefab;
 
     private static Area InstanceArea;
     public GameObject controlledGO;
@@ -19,15 +26,29 @@ public class Area : MonoBehaviour
         Herbivores = new List<GameObject>();
         Carnivores = new List<GameObject>();
         controlledGO = new GameObject();
+        for(int i = 0; i < _initial_plants; i++)
+        {
+            Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
+        }
+        for(int i = 0; i < _initial_herbivores; i++)
+        {
+            Instantiate(herbivorePrefab, GetRandomPos(), Quaternion.identity, transform);
+        }
+        for(int i = 0; i < _initial_carnivores; i++)
+        {
+            Instantiate(carnivorePrefab, GetRandomPos(), Quaternion.identity, transform);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Plants.Count == 0)
-        {
-            var pos = Random.insideUnitCircle * 3 + new Vector2(transform.position.x, transform.position.z);
-            Instantiate(plantPrefab, pos, Quaternion.identity, transform);
+        // add plants randomly at x steps of time
+        if (Time.frameCount % 1 == 0){
+            if(Plants.Count < _min_plants)
+            {
+                Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
+            }
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -62,6 +83,26 @@ public class Area : MonoBehaviour
             Herbivores.Add(go);
         else if (go.tag == "carnivore")
             Carnivores.Add(go);
+    }
+
+    public void InstantiateFood(Vector3 pos)
+    {
+        Instantiate(FoodPrefab, pos, Quaternion.identity, transform);
+    }
+
+    public Vector2 GetRandomPos()
+    {
+        var bounds = GetBounds();
+        var x = Random.Range(-bounds.x, bounds.x);
+        var z = Random.Range(-bounds.y, bounds.y);
+        return( new Vector3(x, 0, z) );
+    }
+
+    public void MonitorLog()
+    {
+        MLAgents.Monitor.Log("Num Plants", Plants.Count, transform);
+        MLAgents.Monitor.Log("Num herbivores", Herbivores.Count, transform);
+        MLAgents.Monitor.Log("Num carnivores", Carnivores.Count, transform);
     }
 
 

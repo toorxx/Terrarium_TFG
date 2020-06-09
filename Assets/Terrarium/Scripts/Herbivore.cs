@@ -27,14 +27,14 @@ public class Herbivore : CreatureAgent
             if (adj != null)
             {
                 var creature = adj.GetComponent<Plant>();
-                var consume = Mathf.Min(creature.Energy, 5);
+                var consume = Mathf.Min(creature.Energy, MaxEnergy);
                 creature.Energy -= consume;
                 if (creature.Energy < .1)
                 {
                     creature.Die();
                 }
                 Energy += consume;
-                AddReward(.1f);
+                AddReward(.25f);
                 currentAction = "Eating";
             }
         }

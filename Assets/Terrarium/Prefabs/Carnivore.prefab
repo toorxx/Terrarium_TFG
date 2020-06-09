@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5328749974412119611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.8080003, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_Children:
   - {fileID: 3872783282065231655}
@@ -113,9 +113,9 @@ MonoBehaviour:
     VectorActionSize: 030000000300000005000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 5022602860645237092, guid: 5db978ce7a75542acb489b7640af95a7, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: CarnivoreBrain
   TeamId: 0
   m_UseChildSensors: 1
@@ -137,10 +137,9 @@ MonoBehaviour:
   MaxStep: 0
   CreatureType: 1
   MaxEnergy: 10
-  MatureSize: 5
-  GrowthRate: 5
-  EatingSpeed: 10
-  MaxSpeed: 10
+  MatureSize: 20
+  GrowthRate: 3
+  MaxSpeed: 1
   AttackDamage: 25
   DefendDamage: 5
   area: {fileID: 0}

@@ -34,6 +34,8 @@ public abstract class CreatureAgent : Agent
     public bool HeuristicActions;
     public bool killed;
 
+    public bool canDisappear; 
+
     
     [Header("Child")]
     public GameObject ChildSpawn;
@@ -67,16 +69,21 @@ public abstract class CreatureAgent : Agent
             //Area.Instance.InstantiateFood(transform.position);
             AddReward(-1f);
             //TransformToFood();
+            if(canDisappear)
+                gameObject.SetActive(false);
             EndEpisode();
-            //gameObject.SetActive(false);
         }
         if (Buried)
         {
             AddReward(-.5f);
+            if(canDisappear)
+                gameObject.SetActive(false);
             EndEpisode();
         }
         if (Dead) {
             AddReward(1f);
+            if(canDisappear)
+                gameObject.SetActive(false);
             EndEpisode();
         }
         if (CanGrow) Grow();        

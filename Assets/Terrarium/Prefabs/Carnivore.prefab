@@ -113,7 +113,7 @@ MonoBehaviour:
     VectorActionSize: 030000000300000005000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 1c3a3aca834d54453819a50f9aff1a0a, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: CarnivoreBrain
@@ -151,6 +151,7 @@ MonoBehaviour:
   Life: 0
   HeuristicActions: 1
   killed: 0
+  canDisappear: 0
   ChildSpawn: {fileID: 5328749974412119611}
   FoodPrefab: {fileID: 5168178221989649339, guid: 573f5a4ad120841408abb60377d311b3,
     type: 3}

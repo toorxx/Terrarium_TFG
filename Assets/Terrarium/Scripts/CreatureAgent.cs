@@ -18,7 +18,6 @@ public abstract class CreatureAgent : Agent
     public float MaxEnergy;
     public float MatureSize;
     public float GrowthRate;
-    public float EatingSpeed;
     public float MaxSpeed;
     public float AttackDamage;
     public float DefendDamage;
@@ -47,9 +46,6 @@ public abstract class CreatureAgent : Agent
     private GameObject Environment;
     private Rigidbody agentRB;
     protected float nextAction;
-    //private RayPerception rayPer;    
-    //private TerrariumAcademy academy;
-    //private TerrariumAcademy academy;
     private int count;
     
     private void Start()
@@ -68,7 +64,7 @@ public abstract class CreatureAgent : Agent
         }
         if (killed)
         {
-            Area.Instance.InstantiateFood(transform.position);
+            //Area.Instance.InstantiateFood(transform.position);
             AddReward(-1f);
             //TransformToFood();
             EndEpisode();
@@ -76,18 +72,18 @@ public abstract class CreatureAgent : Agent
         }
         if (Buried)
         {
-            AddReward(-1f);
+            AddReward(-.5f);
             EndEpisode();
         }
         if (Dead) {
-            Energy = Size;  //creature size is converted to energy
-            //TransformToFood();
             AddReward(1f);
             EndEpisode();
         }
         if (CanGrow) Grow();        
         //if (CanReproduce) Reproduce();        
         Age += AgeRate; 
+        // add reward to live longer
+        AddReward(.001f);
         MonitorLog();
     }
 
@@ -209,16 +205,18 @@ public abstract class CreatureAgent : Agent
     {
         Vector3 rotateDir = Vector3.zero;
         float rotationDir = 0f;
-        if(act[0] == 1f) rotationDir = 1f;
-        else if (act[0] == 2f) rotationDir = -1f;
+        // rotate
+        if(act[0] == 1f) 
+            rotationDir = 1f;
+        else if (act[0] == 2f) 
+            rotationDir = -1f;
+        else rotationDir = 0f;
         rotateDir = transform.up * rotationDir;
-        Energy -= .001f;
         transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
+        // move forward
         if (act[1] == 1f)
-        {
-            transform.position = transform.position + transform.forward;
-        }
-        //transform.Rotate(0, (float)rotationDir*90f, 0);
+            transform.position = transform.position + transform.forward * MaxSpeed;
+        Energy -= .001f;
         currentAction = "Moving";
     }
        
@@ -234,7 +232,7 @@ public abstract class CreatureAgent : Agent
     {
         if (CanReproduce)
         {
-            var vec = Random.insideUnitCircle * 5;
+            var vec = Random.insideUnitCircle * bounds.x;
             var go = Instantiate(ChildSpawn, new Vector3(vec.x, 0, vec.y), Quaternion.identity, Environment.transform);
             go.name = go.name + (count++).ToString();
             var ca = go.GetComponent<CreatureAgent>();

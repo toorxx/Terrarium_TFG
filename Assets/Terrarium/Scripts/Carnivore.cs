@@ -60,36 +60,18 @@ public class Carnivore : CreatureAgent
             if (vic.Energy <= 0)
             {
                 AddReward(.25f);
+                // Can change this deppending on other things
+                Energy += Mathf.Min(damage, 5);
                 vic.killed = true;
             }
         }
-        // else if(damage < 0){
-        //     //TODO: Canviar aixo per life??
-        //     Energy -= damage;
-        // }
         Energy -= .1f;
     }
 
     override protected void Eat()
     {
-        if (CanEat)
-        {
-            var adj = FirstAdjacent("food");
-            if (adj != null)
-            {
-                var creature = adj.GetComponent<Food>();
-                //var consume = Mathf.Min(creature.Energy, 5);
-                // creature.Energy -= consume;
-                // if (creature.Energy < .1)
-                // {
-                //     creature.Die();
-                // }
-                currentAction = "Eating";
-                creature.Die();
-                Energy += 5;
-                AddReward(.25f);
-            }
-        }
+        // currentAction = "Eating";
+        // Energy += 5;
     }
 
     protected override void Defend()

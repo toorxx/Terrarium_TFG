@@ -50,15 +50,6 @@ public class Area : MonoBehaviour
                 Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
             }
         }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            int randomHerbIndex = Random.Range(0, Herbivores.Count);
-            int randomCarnIndex = Random.Range(0, Carnivores.Count);
-            if (controlledGO.tag == "herbivore")
-                controlledGO = Carnivores.Count > 0 ? Carnivores[randomCarnIndex] : Herbivores[randomHerbIndex];
-            else if (controlledGO.tag == "carnivore")
-                controlledGO = Herbivores.Count > 0 ? Herbivores[randomCarnIndex] : Carnivores[randomHerbIndex];
-        } 
     }
 
     public static Area Instance { get { return InstanceArea; }}
@@ -95,7 +86,8 @@ public class Area : MonoBehaviour
         var bounds = GetBounds();
         var x = Random.Range(-bounds.x, bounds.x);
         var z = Random.Range(-bounds.y, bounds.y);
-        return( new Vector3(x, 0, z) );
+        var rand2d = Random.insideUnitCircle * bounds.x;
+        return( new Vector3(rand2d.x, 0, rand2d.y) );
     }
 
     public void MonitorLog()

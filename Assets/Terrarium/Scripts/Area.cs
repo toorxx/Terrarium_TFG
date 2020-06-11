@@ -10,6 +10,8 @@ public class Area : MonoBehaviour
     public int _min_plants;
     public int _time_before_herb;
     public int _time_before_carn;
+    public int _time_before_agents_deactivation;
+    private bool agentsDeactivated;
     public List<GameObject> Plants;
     public List<GameObject> Herbivores;
     public List<GameObject> Carnivores;
@@ -27,46 +29,26 @@ public class Area : MonoBehaviour
         Herbivores = new List<GameObject>();
         Carnivores = new List<GameObject>();
         controlledGO = new GameObject();
+        agentsDeactivated = false;
         for(int i = 0; i < _initial_plants; i++)
         {
             Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
         }
+        StartCoroutine(WaitToInstantiate(_time_before_herb, "herbivore"));
+        StartCoroutine(WaitToInstantiate(_time_before_carn, "carnivore"));
+        StartCoroutine(SetDeactivation(_time_before_agents_deactivation));
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(Time.time);
         // add plants randomly at x steps of time
         if (Time.frameCount % 1 == 0)
         {
             if(Plants.Count < _min_plants)
-            {
                 Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
-            }
         }
-        if (Time.frameCount == _time_before_herb)
-        {
-            for (int i = 0; i < _initial_herbivores; i++)
-            {
-                Instantiate(herbivorePrefab, GetRandomPos(), Quaternion.identity, transform);
-            }
-        }
-        if (Time.frameCount == _time_before_carn)
-        { 
-            for (int i = 0; i < _initial_herbivores; i++)
-            {
-                Instantiate(herbivorePrefab, GetRandomPos(), Quaternion.identity, transform);
-            }
-        }
-
-        if (Time.frameCount > 100)
-        {
-            foreach (var herbivore in Herbivores)
-            {
-                herbivore.GetComponent<CreatureAgent>().canDisappear = true;
-            }
-        }
-
     }
 
     public static Area Instance { get { return InstanceArea; }}
@@ -93,7 +75,7 @@ public class Area : MonoBehaviour
             Carnivores.Add(go);
     }
 
-    public Vector2 GetRandomPos()
+    public Vector3 GetRandomPos()
     {
         var bounds = GetBounds();
         var x = Random.Range(-bounds.x, bounds.x);
@@ -107,6 +89,42 @@ public class Area : MonoBehaviour
         MLAgents.Monitor.Log("Num Plants", Plants.Count, transform);
         MLAgents.Monitor.Log("Num herbivores", Herbivores.Count, transform);
         MLAgents.Monitor.Log("Num carnivores", Carnivores.Count, transform);
+    }
+
+    // set the agents to deactivate. We use this in order to not instantiate agents when episode is finished
+    IEnumerator SetDeactivation(int time)
+    {
+        yield return new WaitForSeconds(time);
+        foreach(var herbivore in Herbivores)
+            herbivore.GetComponent<Herbivore>().canDisappear = true;
+        foreach(var carnivore in Carnivores)
+            carnivore.GetComponent<Carnivore>().canDisappear = true;
+    }
+
+    private void setAgentsList(string kind)
+    {
+        if(kind == "herbivore")
+        {
+            for (int i = 0; i < _initial_herbivores; i++)
+                 Instantiate(herbivorePrefab, GetRandomPos(), Quaternion.identity, transform);
+        }
+        else if(kind == "carnivore")
+        {
+            for (int i = 0; i < _initial_carnivores; i++)
+                Instantiate(carnivorePrefab, GetRandomPos(), Quaternion.identity, transform);
+        }
+    }
+
+    IEnumerator WaitToInstantiate(int time, string kind)
+    {
+        // wait for the numbers of seconds specified by the user before instantiate agernts
+        
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSecondsRealtime(time);
+        setAgentsList(kind);
     }
 
 

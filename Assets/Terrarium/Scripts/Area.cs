@@ -82,7 +82,7 @@ public class Area : MonoBehaviour
         else if (go.tag == "carnivore")
             Carnivores.Add(go);
     }
-s
+
     public Vector3 GetRandomPos()
     {
         var bounds = GetBounds();

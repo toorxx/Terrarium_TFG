@@ -34,6 +34,9 @@ public class Area : MonoBehaviour
         {
             Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
         }
+        StartCoroutine(WaitToInstantiate(_time_before_herb, "herbivore"));
+        StartCoroutine(WaitToInstantiate(_time_before_carn, "carnivore"));
+        StartCoroutine(SetDeactivation(_time_before_agents_deactivation));
     }
 
     // Update is called once per frame
@@ -46,17 +49,6 @@ public class Area : MonoBehaviour
             if(Plants.Count < _min_plants)
                 Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
         }
-        if (Time.frameCount == _time_before_herb)
-            setAgentsList("herbivore");
-        if (Time.frameCount == _time_before_carn)
-            setAgentsList("carnivore");
-        if (Time.frameCount > _time_before_agents_deactivation && !agentsDeactivated)
-        {
-            SetDeactivation();
-            agentsDeactivated = true;
-        }
-        
-
     }
 
     public static Area Instance { get { return InstanceArea; }}
@@ -100,8 +92,9 @@ public class Area : MonoBehaviour
     }
 
     // set the agents to deactivate. We use this in order to not instantiate agents when episode is finished
-    private void SetDeactivation()
+    IEnumerator SetDeactivation(int time)
     {
+        yield return new WaitForSeconds(time);
         foreach(var herbivore in Herbivores)
             herbivore.GetComponent<Herbivore>().canDisappear = true;
         foreach(var carnivore in Carnivores)
@@ -120,6 +113,18 @@ public class Area : MonoBehaviour
             for (int i = 0; i < _initial_carnivores; i++)
                 Instantiate(carnivorePrefab, GetRandomPos(), Quaternion.identity, transform);
         }
+    }
+
+    IEnumerator WaitToInstantiate(int time, string kind)
+    {
+        // wait for the numbers of seconds specified by the user before instantiate agernts
+        
+        //Print the time of when the function is first called.
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSecondsRealtime(time);
+        setAgentsList(kind);
     }
 
 

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4938671995639547724}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 1, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4938671997174272700}
   - {fileID: 4938671997385529042}
@@ -195,9 +195,9 @@ MonoBehaviour:
     VectorActionSize: 030000000300000005000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 5022602860645237092, guid: abbd31f0c859641ebaf26da61fae296b, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: b1fe42535a29a42a5800ac4c61bd16c9, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: HerbivoreBrain
   TeamId: 0
   m_UseChildSensors: 0
@@ -218,10 +218,10 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   CreatureType: 0
-  MaxEnergy: 5
+  MaxEnergy: 20
   MatureSize: 15
-  GrowthRate: 3
-  MaxSpeed: 2
+  GrowthRate: 2
+  MaxSpeed: 5
   AttackDamage: 0
   DefendDamage: 20
   area: {fileID: 0}
@@ -233,6 +233,7 @@ MonoBehaviour:
   Life: 0
   HeuristicActions: 0
   killed: 0
+  canDisappear: 1
   ChildSpawn: {fileID: 4938671995957865614}
   FoodPrefab: {fileID: 5168178221989649339, guid: 573f5a4ad120841408abb60377d311b3,
     type: 3}

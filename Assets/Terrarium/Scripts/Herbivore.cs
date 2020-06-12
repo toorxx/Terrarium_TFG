@@ -27,7 +27,8 @@ public class Herbivore : CreatureAgent
             if (adj != null)
             {
                 var creature = adj.GetComponent<Plant>();
-                var consume = Mathf.Min(creature.Energy, MaxEnergy);
+                //var consume = Mathf.Min(creature.Energy, MaxEnergy);
+                var consume = MaxEnergy;
                 creature.Energy -= consume;
                 if (creature.Energy < .1)
                 {

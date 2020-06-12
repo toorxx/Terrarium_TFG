@@ -38,6 +38,7 @@ public class Plant : MonoBehaviour {
     void Update ()
     {        
         if (CanGrow) Grow();
+        //Grow();
         //if (Dead) Destroy(this);
         if (CanReproduce) Reproduce();
         if(Dead) {
@@ -69,6 +70,7 @@ public class Plant : MonoBehaviour {
         get
         {
             if (Size >= MatureSize && CanGrow) return true;
+            if (Size >= MatureSize) return true;
             else return false;
         }
     }    

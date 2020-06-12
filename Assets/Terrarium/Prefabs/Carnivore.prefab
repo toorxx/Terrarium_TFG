@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5328749974412119611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 1, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3872783282065231655}
   m_Father: {fileID: 0}
@@ -139,7 +139,7 @@ MonoBehaviour:
   MaxEnergy: 10
   MatureSize: 20
   GrowthRate: 3
-  MaxSpeed: 1
+  MaxSpeed: 5
   AttackDamage: 25
   DefendDamage: 5
   area: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   Age: 0
   currentAction: 
   Life: 0
-  HeuristicActions: 1
+  HeuristicActions: 0
   killed: 0
   canDisappear: 0
   ChildSpawn: {fileID: 5328749974412119611}
@@ -227,19 +227,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4037594867893618, guid: 6ff0cd15d1a2a2942b6bb5159b2a0b51, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4037594867893618, guid: 6ff0cd15d1a2a2942b6bb5159b2a0b51, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4406443428980030, guid: 6ff0cd15d1a2a2942b6bb5159b2a0b51, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4406443428980030, guid: 6ff0cd15d1a2a2942b6bb5159b2a0b51, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ff0cd15d1a2a2942b6bb5159b2a0b51, type: 3}

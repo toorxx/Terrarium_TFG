@@ -93,20 +93,20 @@ public abstract class CreatureAgent : Agent
         if (killed)
         {
             AddReward(-1f);
-            if(canDisappear)
+            if(canDisappear && tag.Equals("herbivore"))
                 gameObject.SetActive(false);
             EndEpisode();
         }
         if (Buried)
         {
             AddReward(-1f);
-            if(canDisappear)
+            if(canDisappear && tag.Equals("herbivore"))
                 gameObject.SetActive(false);
             EndEpisode();
         }
         if (Dead) {
             AddReward(1f);
-            if(canDisappear)
+            if(canDisappear && tag.Equals("herbivore"))
                 gameObject.SetActive(false);
             EndEpisode();
         }

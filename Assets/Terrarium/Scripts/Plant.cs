@@ -28,7 +28,7 @@ public class Plant : MonoBehaviour {
     private void Start()
     {
         Size = 1;
-        Energy = 1;
+        Energy = MaxEnergy;
         Age = 0;
         Environment = transform.parent;
         TransformSize();
@@ -50,7 +50,10 @@ public class Plant : MonoBehaviour {
 
     void TransformSize()
     {
-        transform.localScale = Vector3.one * Size;
+        var scale = new Vector3(1 / gameObject.transform.parent.localScale.x,
+                                1 / gameObject.transform.parent.localScale.y, 
+                                1 / gameObject.transform.parent.localScale.z);
+        transform.localScale = scale * Size;
     }
 
     bool CanGrow

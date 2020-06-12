@@ -12,9 +12,8 @@ public enum CreatureType
 }
 public abstract class CreatureAgent : Agent
 {
-    [Header("Creature Type")]
     public CreatureType CreatureType;
-    [Header("Creature Points (100 Max)")]
+    [Header("Creature Points")]
     public float MaxEnergy;
     public float MatureSize;
     public float GrowthRate;
@@ -35,6 +34,7 @@ public abstract class CreatureAgent : Agent
     public bool killed;
 
     public bool canDisappear; 
+    EnvironmentParameters resetParams;
 
     
     [Header("Child")]
@@ -49,51 +49,6 @@ public abstract class CreatureAgent : Agent
     private Rigidbody agentRB;
     protected float nextAction;
     private int count;
-    
-    private void Start()
-    {
-        OnEpisodeBegin();
-        Area.Instance.AddGameObject(gameObject);
-    }
-
-    void Update()
-    {
-        if (OutOfBounds)
-        {
-            AddReward(-1f);
-            EndEpisode();
-            return;
-        }
-        if (killed)
-        {
-            //Area.Instance.InstantiateFood(transform.position);
-            AddReward(-1f);
-            //TransformToFood();
-            if(canDisappear)
-                gameObject.SetActive(false);
-            EndEpisode();
-        }
-        if (Buried)
-        {
-            AddReward(-.5f);
-            if(canDisappear)
-                gameObject.SetActive(false);
-            EndEpisode();
-        }
-        if (Dead) {
-            AddReward(1f);
-            if(canDisappear)
-                gameObject.SetActive(false);
-            EndEpisode();
-        }
-        if (CanGrow) Grow();        
-        //if (CanReproduce) Reproduce();        
-        Age += AgeRate; 
-        // add reward to live longer
-        AddReward(.001f);
-        MonitorLog();
-    }
-
     //public override void AgentReset()
     public override void OnEpisodeBegin()
     {
@@ -108,9 +63,11 @@ public abstract class CreatureAgent : Agent
         var x = Random.Range(-bounds.x, bounds.x);
         var z = Random.Range(-bounds.y, bounds.y);
         transform.position = new Vector3(x, 1, z);
-        //Area.Instance.AddGameObject(gameObject);
         TransformSize();
-        Initialize();
+        if(this.tag.Equals("herbivore"))
+            Area.Instance._min_plants = (int)resetParams.GetWithDefault("min_plants", Area.Instance._min_plants);
+        if(this.tag.Equals("carnivore"))
+            Area.Instance._min_herbivores = (int)resetParams.GetWithDefault("min_herbivores", Area.Instance._min_herbivores);
     }
 
     public override void Initialize()
@@ -120,10 +77,46 @@ public abstract class CreatureAgent : Agent
         //rayPer = GetComponent<RayPerception>();
         agentRB = GetComponent<Rigidbody>();
         currentAction = "Idle";
-        // add to the area
-        //Area.Instance.AddGameObject(gameObject);
-        //Debug.Log(Area.Instance.Herbivores.Count);
+        resetParams = Academy.Instance.EnvironmentParameters;
+        Area.Instance.AddGameObject(gameObject);
+        //resetParams = Academy.Instance.EnvironmentParameters;
+    }       
+
+    void Update()
+    {
+        if (OutOfBounds)
+        {
+            AddReward(-1f);
+            EndEpisode();
+            return;
+        }
+        if (killed)
+        {
+            AddReward(-1f);
+            if(canDisappear)
+                gameObject.SetActive(false);
+            EndEpisode();
+        }
+        if (Buried)
+        {
+            AddReward(-1f);
+            if(canDisappear)
+                gameObject.SetActive(false);
+            EndEpisode();
+        }
+        if (Dead) {
+            AddReward(1f);
+            if(canDisappear)
+                gameObject.SetActive(false);
+            EndEpisode();
+        }
+        if (CanGrow) Grow();              
+        Age += AgeRate; 
+        // add reward to live longer
+        //AddReward(.001f);
+        MonitorLog();
     }
+
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -219,10 +212,12 @@ public abstract class CreatureAgent : Agent
             rotationDir = -1f;
         else rotationDir = 0f;
         rotateDir = transform.up * rotationDir;
-        transform.Rotate(rotateDir * Time.fixedDeltaTime * 180f);
+        transform.Rotate(rotateDir * Time.fixedDeltaTime * 45f);
         // move forward
         if (act[1] == 1f)
-            transform.position = transform.position + transform.forward * MaxSpeed;
+            transform.Translate(Vector3.forward * Time.deltaTime * MaxSpeed);
+            //transform.position = transform.position + transform.forward * MaxSpeed;
+
         Energy -= .001f;
         currentAction = "Moving";
     }
@@ -243,6 +238,7 @@ public abstract class CreatureAgent : Agent
             var go = Instantiate(ChildSpawn, new Vector3(vec.x, 0, vec.y), Quaternion.identity, Environment.transform);
             go.name = go.name + (count++).ToString();
             var ca = go.GetComponent<CreatureAgent>();
+            ca.canDisappear = canDisappear;
             ca.OnEpisodeBegin();
             Energy = Energy / 2;
             AddReward(.2f);            
@@ -261,7 +257,11 @@ public abstract class CreatureAgent : Agent
     
     protected void TransformSize()
     {
-        transform.localScale = Vector3.one * Mathf.Pow(Size,1/3);
+        var scale = new Vector3(1 / gameObject.transform.parent.localScale.x,
+                                1 / gameObject.transform.parent.localScale.y, 
+                                1 / gameObject.transform.parent.localScale.z);
+        Debug.Log(gameObject.transform.parent.localScale.x);
+        gameObject.transform.localScale = scale;
     }
 
     bool CanGrow
@@ -342,7 +342,7 @@ public abstract class CreatureAgent : Agent
         Size += GrowthRate * Random.value;
         // nextaction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
         currentAction ="Growing";
-        TransformSize();
+        //TransformSize();
     }
 
 

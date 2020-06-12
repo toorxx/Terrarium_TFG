@@ -5,22 +5,6 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 public class Carnivore : CreatureAgent
 {
-    public override void OnEpisodeBegin()
-    {
-        //Called on every reset
-        Size = 1;
-        Energy = MaxEnergy;
-        Age = 0;
-        Life = MaxLife;
-        //bounds = Area.InstanceArea.GetBounds();
-        bounds = GetEnvironmentBounds();
-        var x = Random.Range(-bounds.x, bounds.x);
-        var z = Random.Range(-bounds.y, bounds.y);
-        transform.position = new Vector3(x, 1, z);
-        //Area.Instance.AddGameObject(gameObject);
-        TransformSize();
-        Initialize();
-    }
     protected override bool CanEat
     {
         get
@@ -61,7 +45,7 @@ public class Carnivore : CreatureAgent
             {
                 AddReward(.25f);
                 // Can change this deppending on other things
-                Energy += Mathf.Min(damage, 5);
+                Energy = Mathf.Min(MaxEnergy, Energy + Mathf.Min(damage, 5));
                 vic.killed = true;
             }
         }

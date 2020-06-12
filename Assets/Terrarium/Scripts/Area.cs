@@ -8,6 +8,7 @@ public class Area : MonoBehaviour
     public int _initial_herbivores;
     public int _initial_carnivores;
     public int _min_plants;
+    public int _min_herbivores;
     public int _time_before_herb;
     public int _time_before_carn;
     public int _time_before_agents_deactivation;
@@ -36,7 +37,7 @@ public class Area : MonoBehaviour
         }
         StartCoroutine(WaitToInstantiate(_time_before_herb, "herbivore"));
         StartCoroutine(WaitToInstantiate(_time_before_carn, "carnivore"));
-        StartCoroutine(SetDeactivation(_time_before_agents_deactivation));
+        StartCoroutine(SetDeactivation());
     }
 
     // Update is called once per frame
@@ -49,6 +50,10 @@ public class Area : MonoBehaviour
             if(Plants.Count < _min_plants)
                 Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
         }
+        if(Herbivores.Count < _min_herbivores && _min_herbivores > 0)
+            Instantiate(herbivorePrefab, GetRandomPos(), Quaternion.identity, transform);
+        else if(Herbivores.Count > _min_herbivores && _min_herbivores > 0)
+            Herbivores.RemoveRange(0, Herbivores.Count - _min_herbivores);
     }
 
     public static Area Instance { get { return InstanceArea; }}
@@ -92,11 +97,15 @@ public class Area : MonoBehaviour
     }
 
     // set the agents to deactivate. We use this in order to not instantiate agents when episode is finished
-    IEnumerator SetDeactivation(int time)
+    IEnumerator SetDeactivation()
     {
-        yield return new WaitForSeconds(time);
-        foreach(var herbivore in Herbivores)
+        yield return new WaitForSecondsRealtime(_time_before_agents_deactivation);
+        foreach(var herbivore in Herbivores){
             herbivore.GetComponent<Herbivore>().canDisappear = true;
+            Debug.Log(herbivore.GetComponent<Herbivore>().canDisappear);
+        }
+        Debug.Log(Herbivores.Count);
+
         foreach(var carnivore in Carnivores)
             carnivore.GetComponent<Carnivore>().canDisappear = true;
     }

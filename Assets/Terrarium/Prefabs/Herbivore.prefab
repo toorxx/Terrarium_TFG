@@ -195,9 +195,9 @@ MonoBehaviour:
     VectorActionSize: 030000000300000005000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 5022602860645237092, guid: b1fe42535a29a42a5800ac4c61bd16c9, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: e82a62046cc4040e59a1f459c071af43, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 2
+  m_BehaviorType: 0
   m_BehaviorName: HerbivoreBrain
   TeamId: 0
   m_UseChildSensors: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
   MaxEnergy: 20
   MatureSize: 15
   GrowthRate: 2
-  MaxSpeed: 5
+  MaxSpeed: 10
   AttackDamage: 0
   DefendDamage: 20
   area: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
   Life: 0
   HeuristicActions: 0
   killed: 0
-  canDisappear: 1
+  canDisappear: 0
   ChildSpawn: {fileID: 4938671995957865614}
   FoodPrefab: {fileID: 5168178221989649339, guid: 573f5a4ad120841408abb60377d311b3,
     type: 3}

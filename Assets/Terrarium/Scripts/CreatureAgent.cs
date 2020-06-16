@@ -87,33 +87,33 @@ public abstract class CreatureAgent : Agent
         if (OutOfBounds)
         {
             AddReward(-1f);
+            if(canDisappear)
+                DestroyAgent();
             EndEpisode();
             return;
         }
         if (killed)
         {
             AddReward(-1f);
-            if(canDisappear && tag.Equals("herbivore"))
-                gameObject.SetActive(false);
+            if(canDisappear)
+                DestroyAgent();
             EndEpisode();
         }
         if (Buried)
         {
             AddReward(-1f);
-            if(canDisappear && tag.Equals("herbivore"))
-                gameObject.SetActive(false);
+            if (canDisappear)
+                DestroyAgent();
             EndEpisode();
         }
         if (Dead) {
             AddReward(1f);
-            if(canDisappear && tag.Equals("herbivore"))
-                gameObject.SetActive(false);
+            if(canDisappear)
+                DestroyAgent();
             EndEpisode();
         }
         if (CanGrow) Grow();              
-        Age += AgeRate; 
-        // add reward to live longer
-        //AddReward(.001f);
+        Age += AgeRate;
         MonitorLog();
     }
 
@@ -212,13 +212,13 @@ public abstract class CreatureAgent : Agent
             rotationDir = -1f;
         else rotationDir = 0f;
         rotateDir = transform.up * rotationDir;
-        transform.Rotate(rotateDir * Time.fixedDeltaTime * 45f);
+        transform.Rotate(rotateDir * Time.fixedDeltaTime * 90f);
         // move forward
         if (act[1] == 1f)
             transform.Translate(Vector3.forward * Time.deltaTime * MaxSpeed);
+            Energy -= .001f;    
             //transform.position = transform.position + transform.forward * MaxSpeed;
 
-        Energy -= .001f;
         currentAction = "Moving";
     }
        
@@ -241,7 +241,7 @@ public abstract class CreatureAgent : Agent
             ca.canDisappear = canDisappear;
             ca.OnEpisodeBegin();
             Energy = Energy / 2;
-            AddReward(.2f);            
+            AddReward(.25f);            
             currentAction ="Reproducing";
             // nextaction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
         }
@@ -260,7 +260,7 @@ public abstract class CreatureAgent : Agent
         var scale = new Vector3(1 / gameObject.transform.parent.localScale.x,
                                 1 / gameObject.transform.parent.localScale.y, 
                                 1 / gameObject.transform.parent.localScale.z);
-        Debug.Log(gameObject.transform.parent.localScale.x);
+        //Debug.Log(gameObject.transform.parent.localScale.x);
         gameObject.transform.localScale = scale;
     }
 
@@ -342,7 +342,6 @@ public abstract class CreatureAgent : Agent
         Size += GrowthRate * Random.value;
         // nextaction = Time.timeSinceLevelLoad + (25 / MaxSpeed);
         currentAction ="Growing";
-        //TransformSize();
     }
 
 
@@ -372,6 +371,9 @@ public abstract class CreatureAgent : Agent
         if (val) return 1.0f;
         else return 0.0f;
     }
+
+    protected abstract bool noAgents();
+    protected abstract void DestroyAgent();
 }
 
 

@@ -45,15 +45,15 @@ public class Area : MonoBehaviour
     {
         //Debug.Log(Time.time);
         // add plants randomly at x steps of time
-        if (Time.frameCount % 1 == 0)
+        if(Plants.Count < _min_plants)
+            Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
+        if (Time.frameCount % 100 == 0)
         {
-            if(Plants.Count < _min_plants)
-                Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
+            //randomly instantiate plants
+            Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity, transform);
         }
-        if(Herbivores.Count < _min_herbivores && _min_herbivores > 0)
-            Instantiate(herbivorePrefab, GetRandomPos(), Quaternion.identity, transform);
-        else if(Herbivores.Count > _min_herbivores && _min_herbivores > 0)
-            Herbivores.RemoveRange(0, Herbivores.Count - _min_herbivores);
+        
+
     }
 
     public static Area Instance { get { return InstanceArea; }}
@@ -102,10 +102,7 @@ public class Area : MonoBehaviour
         yield return new WaitForSecondsRealtime(_time_before_agents_deactivation);
         foreach(var herbivore in Herbivores){
             herbivore.GetComponent<Herbivore>().canDisappear = true;
-            Debug.Log(herbivore.GetComponent<Herbivore>().canDisappear);
         }
-        Debug.Log(Herbivores.Count);
-
         foreach(var carnivore in Carnivores)
             carnivore.GetComponent<Carnivore>().canDisappear = true;
     }

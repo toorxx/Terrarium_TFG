@@ -62,4 +62,18 @@ public class Carnivore : CreatureAgent
     {
         Attack();
     }
+
+    protected override bool noAgents()
+    {
+        if(Area.Instance.Carnivores.Count > 0)
+            return false;
+        else
+            return true;
+    }
+
+    protected override void DestroyAgent()
+    {
+        Area.Instance.Carnivores.Remove(gameObject);
+        Destroy(gameObject);
+    }
 }

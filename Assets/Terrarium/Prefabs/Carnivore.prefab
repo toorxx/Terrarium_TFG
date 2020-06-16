@@ -136,7 +136,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   CreatureType: 1
-  MaxEnergy: 10
+  MaxEnergy: 20
   MatureSize: 20
   GrowthRate: 3
   MaxSpeed: 5

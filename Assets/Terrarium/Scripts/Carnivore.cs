@@ -37,25 +37,27 @@ public class Carnivore : CreatureAgent
             }
             Debug.Log(damage);
             Debug.Log(_vic);
-        }
-        if(damage > 0)
-        {
-            vic.Energy -= damage;
-            if (vic.Energy <= 0)
+            if(damage > 0)
             {
-                AddReward(.25f);
-                // Can change this deppending on other things
-                Energy = Mathf.Min(MaxEnergy, Energy + Mathf.Min(damage, 5));
-                vic.killed = true;
-            }
-        }
-        Energy -= .1f;
+                vic.Energy -= damage;
+                if (vic.Energy <= 0)
+                {
+                    AddReward(.25f);
+                    Energy = Mathf.Min(MaxEnergy, Energy + Mathf.Min(damage, 5));
+                    // Can change this deppending on other things
+                    vic.killed = true;
+                }
+            } 
+            else 
+                Energy += damage;
+        } 
+        // if attack with no reason subtract energy
+        else Energy -= 0.01f;
     }
 
     override protected void Eat()
     {
-        // currentAction = "Eating";
-        // Energy += 5;
+        Attack();
     }
 
     protected override void Defend()

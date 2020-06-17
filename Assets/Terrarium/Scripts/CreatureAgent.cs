@@ -212,11 +212,25 @@ public abstract class CreatureAgent : Agent
             rotationDir = -1f;
         else rotationDir = 0f;
         rotateDir = transform.up * rotationDir;
-        transform.Rotate(rotateDir * Time.fixedDeltaTime * 90f);
+        //transform.Rotate(rotateDir * Time.fixedDeltaTime * 90f);
         // move forward
-        if (act[1] == 1f)
+        // if using physics perform different
+        if(!agentRB.isKinematic)
+        {
+            if (act[1] == 0f)
+                agentRB.velocity = new Vector3(0, 0, 0);
+            else if (act[1] == 1f)
+            //agentRB.AddForce(transform.forward * MaxSpeed, ForceMode.VelocityChange);
+            agentRB.velocity = transform.TransformDirection(new Vector3(0, 0, MaxSpeed));
+            //transform.Translate(0,0, MaxSpeed * Time.deltaTime, Space.Self);
+            //transform.Translate(Vector3.forward * Time.deltaTime * MaxSpeed);
+        } 
+        else {
             transform.Translate(Vector3.forward * Time.deltaTime * MaxSpeed);
-            Energy -= .001f;    
+        }
+        transform.Rotate(rotateDir, Time.fixedDeltaTime * 90f);
+        
+        Energy -= .001f;    
             //transform.position = transform.position + transform.forward * MaxSpeed;
 
         currentAction = "Moving";

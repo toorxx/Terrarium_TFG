@@ -27,7 +27,9 @@ public class Herbivore : CreatureAgent
             if (adj != null)
             {
                 var creature = adj.GetComponent<Plant>();
-                var consume = Mathf.Min(creature.Energy, MaxEnergy);
+                //var consume = Mathf.Min(creature.Energy, MaxEnergy);
+                // randomly gets more or less energy
+                var consume = Random.Range(7, MaxEnergy);
                 creature.Energy -= consume;
                 if (creature.Energy < .1)
                 {
@@ -38,6 +40,20 @@ public class Herbivore : CreatureAgent
                 currentAction = "Eating";
             }
         }
+    }
+
+    protected override bool noAgents()
+    {
+        if(Area.Instance.Herbivores.Count > 0)
+            return false;
+        else
+            return true;
+    }
+
+    protected override void DestroyAgent()
+    {
+        Area.Instance.Herbivores.Remove(gameObject);
+        Destroy(gameObject);
     }
 
 }

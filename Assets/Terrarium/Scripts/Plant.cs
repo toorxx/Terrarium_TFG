@@ -28,29 +28,34 @@ public class Plant : MonoBehaviour {
     private void Start()
     {
         Size = 1;
-        Energy = 1;
+        Energy = MaxEnergy;
         Age = 0;
         Environment = transform.parent;
         TransformSize();
+        StartCoroutine(WaitToDie(120));
         Area.Instance.Plants.Add(gameObject);
     }
     
     void Update ()
     {        
-        if (CanGrow) Grow();
-        //if (Dead) Destroy(this);
-        if (CanReproduce) Reproduce();
+        // if (CanGrow) Grow();
+        // //Grow();
+        // //if (Dead) Destroy(this);
+        // if (CanReproduce) Reproduce();
         if(Dead) {
             Debug.Log("Plant Destroyed" + gameObject);
             Die();
         }
-        Age += AgeRate;
-        Energy += EnergyGrowthRate;               
+        // Age += AgeRate;
+        // Energy += EnergyGrowthRate;               
     }
 
     void TransformSize()
     {
-        transform.localScale = Vector3.one * Size;
+        var scale = new Vector3(1 / gameObject.transform.parent.localScale.x,
+                                1 / gameObject.transform.parent.localScale.y, 
+                                1 / gameObject.transform.parent.localScale.z);
+        transform.localScale = scale * Size;
     }
 
     bool CanGrow
@@ -66,6 +71,7 @@ public class Plant : MonoBehaviour {
         get
         {
             if (Size >= MatureSize && CanGrow) return true;
+            if (Size >= MatureSize) return true;
             else return false;
         }
     }    
@@ -100,6 +106,13 @@ public class Plant : MonoBehaviour {
     {
         Area.Instance.Plants.Remove(gameObject);
         Destroy(gameObject);
+    }
+
+    IEnumerator WaitToDie(int time)
+    {
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSecondsRealtime(time);
+        Die();
     }
 
 
